@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_building"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nirupama.prasad.mapmysjsu.BuildingActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/map_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorToolBar"
+        android:elevation="4dp"
+        android:subtitleTextColor="#FFFFFF"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/bldg_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/map_toolbar"
+        android:layout_marginStart="6dp"
+        android:text="Building Details: " />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/bbc"
+        android:id="@+id/bldg_imageView"
+        android:layout_below="@id/bldg_textView"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/streetview"
+        android:id="@+id/btnStreetView"
+        android:onClick="btnStreetViewLauncher"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

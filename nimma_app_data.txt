@@ -1,0 +1,87 @@
+
+imagesizew = 1440.0
+imageSizeH = 1944.0
+
+pixel coords for image alone (relevant portion without legend)
+top left        X: 12.972973    Y: 80.26868     ScreenX: 12.972973      ScreenY:444.26868
+bottom left:    X: 9.72973      Y: 1566.3018    ScreenX: 9.72973        ScreenY:1930.3018
+top right:      X: 1420.5405    Y: 80.26868     ScreenX: 1420.5405      ScreenY:444.26868
+bottom right:   X: 1427.027     Y: 1566.3018    ScreenX: 1427.027       ScreenY:1930.3018
+ 
+new image sizes:
+width = 1407
+height = 1486
+
+
+pixel coords for non image (top before the actual map):
+
+top left: 		X: 9.72973 		Y: -351.2649 	ScreenX: 9.72973 	ScreenY:12.735107
+top right: 		X: 1427.027 	Y: -348.02026 	ScreenX: 1427.027 	ScreenY:15.979736
+bottom left: 	X: 12.972973 	Y: 70.53485 	ScreenX: 12.972973 	ScreenY:434.53485
+bottom right: 	X: 1427.027 	Y: 57.556396 	ScreenX: 1427.027 	ScreenY:421.5564
+
+actual offsets:
+xoffset = 0
+yoffset = 421
+
+
+
+MAP DATA DUMP:
+angle = 60.0
+r = 1.0471975511965976
+bearingTLtoTR = 58.32470703125
+distanceTLtoTR = 649.9541625976562
+bearingTRtoTL = -121.67151641845703
+current_X = 696.18774
+current_Y = 693.13116
+center_X = 13.0
+center_Y = 445.0
+new_X = 569.48175
+new_Y = -22.59236
+
+map distance from top left to top right - 649.95
+phone pixels from top left to top right - 1407
+
+therefore - 1 pixel = 0.461 meters
+and 1 meter = 2.1679 pixels
+
+also we know that the angle from top left's true north, westward to top right is 60.
+that means, the angle between map orientation and image orientation is 30. The image turns the map by 30 degrees downwards 
+
+------debugging-------
+hypotenuse = 297.8080749511719
+bearing = 142.36489868164062
+currentDistanceX = 181.85067364202305
+totalHypotenuse = 839.4713134765625
+totalDistanceX = 828.8639465154198
+currentPixelX = 308.6922756020327
+ImageSizeW = 1407.0
+
+
+----------experimented code --------
+GetCurrentPixelY:
+        double hypotenuse = upperLeft.distanceTo(current);
+        double bearing = upperLeft.bearingTo(current);
+
+        double currentDistanceY = 0, currentDistanceYAbs = 0;
+        double BearingTimesPi = bearing * Math.PI;
+        double BearPiDividedBy180 = BearingTimesPi / 180;
+        double precurrentDistanceY = Math.abs(Math.cos (Math.toRadians(bearing)));
+        double precurrentDistanceYAbs = Math.cos(Math.toRadians(BearPiDividedBy180));
+
+        currentDistanceY = precurrentDistanceY * hypotenuse;
+        currentDistanceYAbs = precurrentDistanceYAbs * hypotenuse;
+
+
+        //double currentDistanceY = Math.cos(bearing * Math.PI / OneEightyDeg) * hypotenuse;
+        //                           "percentage to mark the position"
+        double totalHypotenuse = upperLeft.distanceTo(lowerRight);
+        double totalBearing = upperLeft.bearingTo(lowerRight);
+        double totalBearingRadians = Math.toRadians(totalBearing);
+        double cosTotalBearingRadians = Math.abs(Math.cos(totalBearingRadians));
+        double totalDistanceY = totalHypotenuse * cosTotalBearingRadians;
+
+                //Math.cos((upperLeft.bearingTo(lowerRight) * Math.PI / OneEightyDeg));
+        double currentPixelY = currentDistanceY / totalDistanceY * ImageSizeH;
+
+        return currentPixelY;
